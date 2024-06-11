@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://jakarta.ee/xml/ns/jakartaee"
+	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+ 	https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+	id="WebApp_ID" version="6.0">
+	<display-name>spring2</display-name>
+	
+	<!-- web.xml은 순서를 지켜서 작성해야 좋다! -->
+	<!-- Context Parameter(WAS의 환경 설정 변수) 설정 -->
+	<!-- 스프링 context(컨텍스트)를 저장한 파일 위치 -->
+	<!-- WAS가 시작되고 나서 스프링 프레임 워크가 시작이 되고 여기서 설정한 이름의 파일을 읽어 드리게 됨. -->
+	<!-- 변수 이름도 맞춰주어야 한다고. 스프링 문서에 있는 변수이름을 가지고 온거라고. -->
+    <!-- ContextLoaderListener가 사용하는 XML web.xml다 읽으면 발생되는 리스너.-->
+    <!--  ContextLoaderListener리스너 객체가 읽어야 되는 xml파일 경로와 파일이름. WEB-INF/application-context.xml-->
+	<context-param> <!-- ContextLoaderListener가 사용함. -->
+		<param-name>contextConfigLocation</param-name><!-- 변수이름 설정. 약속된걸 써야함 -->
+		<param-value>WEB-INF/application-context.xml</param-value><!-- 변수 값 설정. ContextLoaderListener가 읽어드리는 파일 -->
+	</context-param>
+	<!-- filter 설정  -->
+	<!-- 스프링 프레임 워크에서 제공되는 문자열 인코딩 필터를 사용하겠다고 설정을 해두는 것 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name><!-- WAS가 찾을수 있도록 이름 주는것. 필터 매핑에서 사용하는 이름과 이 이름이 맞아야함(동일해야) 아무렇게나 작성해두됨 -->
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern><!-- 필터가 어떤 url처리할건지 설정 /*는 모든 요청을 인코딩 필터를 거치고 나서 들어가겠다는 뜻. -->
+	</filter-mapping>
+	
+	<!-- listener 설정 -->
+	<!-- 스프링 프레임 워크의 컨텍스트 로더 리스너 설정 :
+		 	WAS에서 ContextLoaded 이벤트가 발생 했을 떄, 컨텍스트 파라미터 중에서
+		 	contextConfigLocation 파라미터에 설정된 파일 application-context.xml 파일을 읽음.-->
+	<listener><!-- 연결되는게 <context-param>태그라고 -->
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+		<!-- 컨텍스트로드가 끝나면 이 리스너가 실행 됨. -->
+		<!-- web.xml은 톰캣(WAS)가 사용하는 파일 -->
+		<!-- 리스너. 이벤트 처리 web.xml 환경설정 다하면 이벤트 발생. 얘가 가져가서 처리하는데 
+		contextConfigLocation이름으로 설정된 <param-value>WEB-INF/application-context.xml</param-value> 파일 읽는다고 
+		스프링 프레임 워크가 사용하는 객체들? bin 생성?-->
+	</listener>
+	
+	<!-- Servlet 설정 -->
+	<!-- 스프링 프레임 워크에서 제공하는 디스패쳐 서블릿을 설정함. -->
+	<servlet><!-- 서블릿네임, 서블릿클래스 태그는 필수 -->
+		<servlet-name>dispatcherServlet</servlet-name><!-- 원하는 대로 만들어도 됨 -->
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		
+		<!-- 디스패쳐 서블릿의 컨텍스트(설정) -->
+		<init-param><!-- 인잇 파람을 설정하면 파람네임,파람벨류 필수 -->
+			<param-name>contextConfigLocation</param-name><!-- 이름 잘못쓰면 안된다고 함 -->
+			<param-value>/WEB-INF/servlet-context.xml</param-value><!-- 서블릿이 사용하는 컨텍스트 -->
+		</init-param>
+		<load-on-startup>1</load-on-startup><!-- 이건 옵션이라고 함. 서버가 시작이 될때 서블릿객체가 로드되는 순서라고 생각하면 되고 숫자가 작을 수록 먼저 로드가 된다고 생각하라고 -->
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcherServlet</servlet-name><!-- 서블릿 이름 -->
+		<url-pattern>/</url-pattern><!-- 필터랑 다른 점 모든 요청 주소 처리하고자 한다면 /(슬래시) 1개만 쓰기. *사용 안한다.-->
+	</servlet-mapping>
+	
+</web-app>

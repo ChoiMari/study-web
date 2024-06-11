@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Html table</title>
+        <style> 
+            table, th, td {       
+                border: 1px solid black;
+                border-collapse: collapse;
+            } 
+        </style>
+    </head>
+    <body>
+        <a href="index.html">인덱스 페이지</a>
+        <br />
+        <a href="table.html">테이블</a>
+        <h1>테이블</h1>
+        
+        <hr />
+        <h1>column span</h1>
+        
+        <table>
+            <caption>연습문제 1</caption><!-- 테이블 제목 -->
+            <thead><!-- 테이블 헤더: 주로 컬럼 이름들을 작성할 때 사용함. 컬럼 이름 없는 테이블은 이거 없어두 됨. -->
+                <tr><!-- 테이블 row 행 -->
+                    <th>이름</th><!-- 테이블 셀 헤더 -->
+                    <th colspan="2">전화번호</th>
+                </tr>
+            </thead>
+            <tbody><!-- 테이블의 본체(몸통): 데이터를 가지고 있는 행과 열 -->
+                <tr>
+                    <td>홍길동</td><!-- 테이블 셀, 데이터 -->
+                    <td>010-1234-56789</td>
+                    <td>02-1234-5678</td>
+                </tr>
+                
+                 <tr>
+                    <td>아이티윌</td><!-- 테이블 셀, 데이터 -->
+                    <td>010-0000-0000</td>
+                    <td>02-0000-0000</td>
+                </tr>
+        </table>
+        
+        
+        <br>
+        <hr />
+        <h1>row span</h1>
+        
+        <table>
+            <caption>연습문제 2</caption><!-- 테이블 제목 -->
+          
+            <tbody><!-- 테이블의 본체(몸통): 데이터를 가지고 있는 행과 열 -->
+                <tr>
+                    <th>이름</th><!-- 테이블 셀, 데이터 -->
+                    <td>홍길동</td>
+                    <td>아이티윌</td>
+                </tr>
+                
+                 <tr>
+                    <th rowspan="2">전화번호</th>
+                    <td>010-1234-56789</td><!-- 테이블 셀, 데이터 -->
+                    <td>010-0000-0000</td>
+                </tr>
+                
+                <tr>
+                    <td>02-1234-5678</td><!-- 테이블 셀, 데이터 -->
+                    <td>02-0000-0000</td>
+                </tr>
+        </table>
+        
+        
+    </body>
+</html>

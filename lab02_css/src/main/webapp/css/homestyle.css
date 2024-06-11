@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+ 
+    /*구글 웹 폰트 적용*/
+        @import url('https://fonts.googleapis.com/css2?family=Cute+Font&display=swap');
+        
+        .cute-font-regular {
+            font-family: "Cute Font", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            }
+
+
+        body {
+            font-family: "Cute Font", sans-serif;
+            font-style: normal; 
+            background-color:pink;
+            /* background-color:beige; */
+            /* background-color: #66BED6 */
+           /* height: 100vh; */
+            /* background: url("../images/반짝이.png") no-repeat center; */
+           /* background-size: cover; */
+            }
+            
+img.m1 {
+   border-style: inset;
+}
+
+li {
+    list-style:none;
+}
+
+
+li.m1-1 {
+    font-size: 30px;
+    border-style: inset;
+    text-align: center;    
+}
+
+
+/* p.m2-1 {
+    border-style: dotted dashed solid double;
+    font-size: 30px;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    align-items: center;
+} */
+       /* h1.firstline {
+            border-style: dotted dashed solid double;
+            color: white;
+            font-size: 40px;
+            text-align: center;
+            }    */
+            
+            

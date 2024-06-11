@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://jakarta.ee/xml/ns/jakartaee"
+    xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee 
+https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+    id="WebApp_ID" version="6.0">
+    <display-name>lab05_jsp</display-name>
+
+    <filter> <!-- 필터 네임, 필터 클래스는 필수 -->
+        <filter-name>characterEncodingFilter</filter-name> <!-- 클래스 이름과 똑같은 경우 많으나 선생님은 앞글자 소문자로 바꾸심 -->
+        <filter-class>com.itwill.lab05.filter.CharacterEncodingFilter</filter-class> <!-- 패키지이름.클래스 까지 풀로 써주어야함. -->
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping> <!-- 필터 이름, URL 패턴이 필수 -->
+        <filter-name>characterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern> <!-- 모든 요청주소를 전부 다 필터링 하겠다라는 뜻. -->
+    </filter-mapping>
+    
+</web-app>

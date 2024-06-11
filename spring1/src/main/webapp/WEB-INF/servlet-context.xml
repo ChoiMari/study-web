@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+   <!-- Spring Web MVC 설정들을 애너테이션 기반으로 설정할 수 있도록 하기 위해서 안그러면 전부다 xml써야하는데 클래스 만들때 @으로 대체하기 위해서-->
+   <mvc:annotation-driven><!-- 핸들러 매핑이라고 하는 클래스가 초기화가 되면서 map이 생성됨 키값 요청방식과 요청주소 @방식으로 관리를 하겠다 -->
+   	 <mvc:message-converters>
+   	 	<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+   	 		<property name="supportedMediaTypes"> <!-- StringHttpMessageConverter클래스에 있는 필드(웹에서는 프로퍼티)이름 작성해야 한다고 -->
+   	 			<list>
+   	 				<value>text/html; charset=UTF-8</value> <!-- jsp set프로터티랑 같은 거라고 생각하라고 문자열 가지고 있는 배열(list)을 넘기겠다. -->
+   	 				<!-- 메세지 변환기가 html을 지원한다 정도로 이해하면 된다고. -->
+   	 			</list>
+   	 		</property>
+   	 	</bean>
+   	 </mvc:message-converters>
+   </mvc:annotation-driven>
+   <!-- 이거 중요하다고 함 -->
+   <!-- 웹 스프링 MVC에서 디스펙쳐 서블릿(dispatcherServlet)이 처리하지 않는 정적인 요청들이 있는데 그 요청들에 필요한 파일들이 있는데 
+   예) 이미지 파일, css작성 파일, 자바 스크립트 파일, 등등.. 이 있는 폴더 위치를 설정해 두는 것.
+   정적 리소스들(이미지,css,js,...)들을 /webapp/static/폴더 아래에 작성하겠다라고 설정 한 것.-->
+<!-- ** 두개인 이유. webapp폴더 밑에서 하위 폴더를 만들건데 여기서는 static이라고 만들건데 이 폴더 밑에 종류별로 구분할거라고
+예) 이미지 저장파일 폴더는 images, 자바스크립트는 js, css는 css 등이라고 폴더를 만들건데...
+static **는 그 하위 폴더의 안쪽까지도 들어가는것 폴더 구조가 몇단계든 상관없이 모든 하위폴더 전부를 검사하겠다는 뜻.
+** 모든 하위 폴더 라는 뜻. (하위 폴더의 전체) *한개 쓰면 딱 바로밑의 하위폴더만 간다고-->
+   <mvc:resources location="/static/" mapping="/**" />
+   
+   <!-- 뷰 리졸버 설정: Spring MVC에서 사용하는 뷰(뷰는jsp파일로 만듬)를 찾기 위한 설정-->
+   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+   	 <property name="prefix" value="/WEB-INF/views/" /> <!--  value= 원하는 폴더 위치(경로)로 지정 -->
+   	 <property name="suffix" value=".jsp" />
+   </bean><!-- 스프링 객체 bean 생성하라는 뜻. InternalResourceViewResolver클래스의 기본 생성자를 호출해라. 내부 리소스 뷰를 찾아주는 객체-->
+   <!-- 프로퍼티 태그는 setter호출해라는 뜻. name속성 대소문자까지 일치해서 써야한다고. value=".jsp" 파일 확장자 .jsp로 설정 -->
+   
+   <!--  컨트롤러 클래스들을 작성하는 패키지 이름 설정. -->
+   <context:component-scan base-package="com.itwill.spring1.web" /><!-- 의미 : 특정 패키지 아래에(com.itwill.spring.web 패키지)아래에
+   애너테이션(@Controoler, @RestController)이 사용된 클래스들을 찾아서 객체를 생성하고 관리하기 위한 설정.  
+   com.itwill.spring.web 패키지 아래에 클래스들을 만드는데 그중에서도 @이 있는 클래스들만 생성하고 관리가 된다고 디스패처 서블릿이 
+   bean(객체)들을 생성하고 관리함.-->
+</beans>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- mapper의 이름(메서드이름)들을 모아 두는 공간 namespace 이런 패키지 밑에 이런 인터페이스가 있으면 되고 그 인터페이스에 id값으로 준 selectOrderByIdDesc이름의 메서드가 있으면 
+해당 sql문을 실행하는 메서드를 만들어 주겠다는 의미.-->
+<mapper namespace="com.itwill.spring2.repository.PostDao"><!-- <select id="selectOrderByIdDesc" resultType="Post"> 프로그램에서 사용하게 될 sql문에 id를 주고 리턴할 클래스 타입설정함 -->
+    <!-- posts 테이블 전체 검색.목록보기에 이용 -->
+    <select id="selectOrderByIdDesc" resultType="Post"> <!--resultType=는 원래 com.itwill.spring2.repository.Post이렇게 써야함. -->
+    <!--이를 간단히 사용하기 위해서 mybatis-config.xml에서 별명으로 Post라고 설정함. -->
+    <!-- Post타입으로 리턴이 되어야한다. where절이 있으면 1개 리턴, 리턴 받는 게 여러 개 행들이면 리스트까지 자동으로 만들어준다고 함 -->
+        select * from posts order by id desc <!--id기준 내림차순으로 전체 검색(select)하는 sql문장 -->
+    </select><!-- sql문이 select라서 select태그를 쓴 것. -->
+    <!-- posts테이블에서 id(PK)로 검색. 상세보기에 사용할 sql문 -->
+    <select id="selectById" resultType="Post"><!-- 리턴타입 Post타입 주세요라는 의미.select는 문은 resultType꼭 써야한다고 함. -->
+        select * from posts where id = #{id} <!-- #{id} : id라는 파라미터로 채워지는 부분 -->
+    </select> <!-- PostDao인터페이스에 선언함 selectById메서드 그럼 마이바티스가 해당 sql문을 실행하는 몸체 구현해준다 -->
+    
+    <!-- posts 테이블에서 행 삽입. 새 글 작성에 사용할 sql문 -->
+    <insert id="insertPost"> <!-- id에 쓴 이름으로 인터페이스에서 메서드 선언하면 마이바티스가 해당 sql문을 실행하는 메서드를 자동으로 알아서 몸체 구현해준다 -->
+        insert into posts (title, content, author)
+        values (#{title}, #{content}, #{author}) 
+    </insert> <!-- insert는 리턴타입 무조건 int 행1개 또는 0개 insert되는거니까 그래서 resultType지정할 필요 없고 select문에만 리턴타입 지정하면 된다고 -->
+    <!-- 아규먼트 1개밖에 전달 못하니까? 지금은 아규먼트 #{title}, #{content}, #{author} 3개를 전달해야되서 인터 페이스에서 메서드를 아규먼트(파마리터 선언이)로 3개 묶어서 post객체로 1개 넘긴다고. -->
+    <!-- int insertPost(Post post); getter메서드 호출해서 아규먼트 채워준다고 함.-->
+    
+    <!-- posts테이블에서 해당 id의 제목,내용,수정시간을 업데이트 하는 sql문 -> 인터페이스에서 해당 id 속성 값과 같은 이름으로 메서드 선언 -> 제대로 실행 되는지 단위 테스트 해보기 -->
+    <update id="updatePost">
+        update posts 
+        set title = #{title}, content = #{content}, modified_time = systimestamp 
+        where id = #{id}
+    </update> <!-- 아규먼트로 #{}부분 값을 주어야함 -->
+    
+    <!-- posts테이블에서 해당 id의 행을 삭제하는 sql문 -> 인터페이스에서 해당 id 속성 값과 같은 이름으로 메서드 선언 -> 제대로 실행 되는지 단위 테스트 해보기 -->
+    <delete id="deletePost">
+        delete from posts where id = #{id}
+    </delete>
+</mapper>

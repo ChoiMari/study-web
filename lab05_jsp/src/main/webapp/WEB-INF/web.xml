@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://jakarta.ee/xml/ns/jakartaee"
+    xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee 
+    https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+    version="6.0">
+    <filter>
+        <filter-name>characterEncodingFilter</filter-name>
+        <filter-class>com.itwill.lab05.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>characterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <display-name>authenticationFilter</display-name>
+        <filter-name>authenticationFilter</filter-name>
+        <filter-class>com.itwill.lab05.filter.AuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <!-- 필터가 필터링하는 요청 주소들. 나열한 페이지들은 필터를 거친후 서블릿으로 갈수도 있고
+        안갈수도 있음 필터가 필터링을 해주어야되는 url주소들 <url-pattern>필터링주소</url-pattern> 사이에 나열 
+        굳이 여기서 한 이유는 필터는 적용되는 순서가 중요해서!
+        요청이 들어오면 1번째 필터를 거치고 2번째 필터를 거치고 그 다음에 서블릿으로 가고
+        이럴수가 있으니까 1번을 먼저거치고 2번으로 갈거냐는 중요할수도 있고 아닐수도 있는데
+        만약 순서가 중요하다면, web.xml에서 정의. 서블릿 클래스의 @애너테이션말고, 여기서 정의하면 됨.
+        지금 나열한건 로그인 해야지만 접근 가능한 주소로 하기 위해서 시나리오를 짜서! -->
+        <filter-name>authenticationFilter</filter-name>
+        <url-pattern>/post/create</url-pattern>
+        <url-pattern>/post/details</url-pattern>
+        <url-pattern>/post/modify</url-pattern>
+        <url-pattern>/post/update</url-pattern>
+        <url-pattern>/post/delete</url-pattern>
+    </filter-mapping>
+    <display-name>lab05_jsp</display-name>
+   
+</web-app>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Html table</title>
+        <style> 
+            table, th, td {       
+                border: 1px solid black;
+                border-collapse: collapse;
+            } 
+        </style>
+	</head>
+	<body>
+        <a href="index.html">인덱스 페이지</a>
+        <br>
+        <a href="tableex.html">연습 문제</a>
+		<h1>테이블</h1>
+        
+        <table>
+            <caption>프론트엔드 과목</caption><!-- 테이블 제목 -->
+            <thead><!-- 테이블 헤더: 주로 컬럼 이름들을 작성할 때 사용함. 컬럼 이름 없는 테이블은 이거 없어두 됨. -->
+                <tr><!-- 테이블 row 행 -->
+                    <th>번호</th><!-- 테이블 셀 헤더 -->
+                    <th>HTML</th>
+                    <th>CSS</th>
+                    <th>JavaScript</th>
+                </tr>
+            </thead>
+            <tbody><!-- 테이블의 본체(몸통): 데이터를 가지고 있는 행과 열 -->
+                <tr>
+                    <td>1</td><!-- 테이블 셀, 데이터 -->
+                    <td>10</td>
+                    <td>10</td>
+                    <td>10</td>
+                </tr>
+                
+                 <tr>
+                    <td>2</td><!-- 테이블 셀, 데이터 -->
+                    <td>5</td>
+                    <td>5</td>
+                    <td>5</td>
+                </tr>
+                
+                <tr>
+                    <td>3</td><!-- 테이블 셀, 데이터 -->
+                    <td>10</td>
+                    <td>5</td>
+                    <td>4</td>
+                </tr>
+            </tbody>
+            <tfoot><!-- 테이블 푸터: 꼬릿말. 잘 사용하지는 않는다고.. 필수가 아님. -->
+                <tr>
+                    <th>합계</th>
+                    <td>25</td>
+                    <td>20</td>
+                    <td>19</td>
+                </tr>
+            </tfoot>
+        </table>
+	</body>
+</html>

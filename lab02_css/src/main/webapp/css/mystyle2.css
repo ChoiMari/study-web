@@ -1,0 +1,73 @@
+@CHARSET "UTF-8";
+body {
+    background-color: #f1f1f1;
+    margin: 20px;
+    line-height: 26px;
+}
+
+.wrapper {
+    position: relative;
+    overflow: auto;
+}
+
+#sidebar {
+    background-color: #003366;
+    padding: 5px;
+    text-align: center;
+}
+/*이미지에 테두리선 액자 비슷한 효과*/
+img {
+    border: 5px solid white;
+    border-radius: 10px;
+}
+
+#bottom {
+    text-align: center;
+    padding: 10px;
+    font-size: 80%;
+}
+
+h1 {
+    color: seagreen;
+}
+
+/*header 아래에 있는 p태그만 적용 하겠다.*/
+header > p {
+    color: darkseagreen;
+}
+
+#menu_list {
+    list-style-type: none; /*앞에 동그란 점 없애는 거. */
+    padding: 0px;
+    position: relative;/*부모를 기준으로 상대적으로 배치함*/
+}
+
+.menu_item {
+    width: 160px;
+    float: left;/*부모가 position:relative인 경우에 상대적으로 배치 하겠다.*/
+    border: 1px solid black;
+    margin: 4px;
+    text-align: center;
+    background-color: #888888;
+}
+
+#main {
+    clear: both;/*설정된 배치(position:relative)를 지워버리고 원래 배치로 되돌아 가겠다는 의미*/
+}
+
+.menu_item:hover {
+    background-color: #cccccc;
+}
+
+.mylink {
+    color: white;
+    text-decoration: none;
+}
+
+.mylink:hover {
+    color: #FF5050;
+}
+
+img {
+    width: 170px;
+}
