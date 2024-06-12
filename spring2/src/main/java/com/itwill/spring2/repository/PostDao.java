@@ -20,5 +20,5 @@ public interface PostDao {
 	int deletePost(Integer id); //파라미터 id 1개만 필요함
 	
 	// 검색하는 sql문을 실행하는 메서드 선언 --sql문은 post-mapper.xml에 설정해놓음. 여기(인터페이스)에 선언만하면 몸체는 mybatis가 구현함
-	List<Post> search(PostSearchDto dto);
+	 List<Post> search(PostSearchDto dto);
 }

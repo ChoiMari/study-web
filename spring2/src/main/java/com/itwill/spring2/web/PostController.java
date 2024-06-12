@@ -132,14 +132,13 @@ public class PostController {
 	}
 	
 	//TODO : 검색 해보기
-	@GetMapping("/search")
-	public String search(PostSearchDto dto, Model model) {
-		log.debug("GET: search(dto={})",dto);
-		
-		List<PostListDto> list = postService.search(dto);
-		
-		model.addAttribute("posts", list);
-		
-		return "post/list";
-	}
+    @GetMapping("/search")
+    public String search(PostSearchDto dto, Model model) {
+        log.debug("search({})", dto);
+        
+        List<PostListDto> list = postService.search(dto);
+        model.addAttribute("posts", list);
+        
+        return "post/list";
+    }
 }

@@ -112,7 +112,7 @@ public class PostService {
 	
 	//TODO : 검색 해보기
     public List<PostListDto> search(PostSearchDto dto) {
-        log.debug("search(dto={})", dto);
+        log.debug("search({})", dto);
         
         List<Post> list = postDao.search(dto);
         
