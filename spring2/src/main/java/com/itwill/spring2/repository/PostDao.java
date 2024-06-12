@@ -2,6 +2,8 @@ package com.itwill.spring2.repository;
 
 import java.util.List;
 
+import com.itwill.spring2.dto.PostSearchDto;
+
 public interface PostDao {
 
 	//post-mapper.xml에서 id="selectOrderByIdDesc"인 SQL을 실행하는 메서드
@@ -16,4 +18,7 @@ public interface PostDao {
 	
 	int updatePost(Post post); //#{}자리로 채워야 할 게 3개 -> Post타입의 객체 1개로 대체
 	int deletePost(Integer id); //파라미터 id 1개만 필요함
+	
+	// 검색하는 sql문을 실행하는 메서드 선언 --sql문은 post-mapper.xml에 설정해놓음. 여기(인터페이스)에 선언만하면 몸체는 mybatis가 구현함
+	List<Post> search(PostSearchDto dto);
 }

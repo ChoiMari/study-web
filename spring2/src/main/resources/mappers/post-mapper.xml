@@ -36,4 +36,31 @@
     <delete id="deletePost">
         delete from posts where id = #{id}
     </delete>
+    
+    <!-- posts테이블에서 제목/내용/작성자로 검색하기 기능 만드는 sql문 -->
+    <select id="search" resultType="Post"> <!--리턴타입 간단히 사용한건 리턴타입에 별명주어서! 별명 안주었으면 패키지 이름.클래스까지 다써주어야함 -->
+        <bind name="searchKeyword" value="'%' + keyword + '%'" /> <!-- like검색할 때 검색어에 앞뒤로 %붙임. 와일드카드 포함하는 단어 검색 -->
+        <!-- 마이바티스 문법에서 태그를 찾아서 사용했다고 함. -->
+        select * from posts
+        <where>
+            <choose><!--  <choose> <when> 태그 switch case랑 비슷하다고 함 -->
+                <when test='category.equals("t")'> <!--여기 만족하면 해당 <when>태그의 sql문 실행 ''작은 따옴표 속성 값 설정 따옴표로 묶는데 큰/작은따옴표 구분 안한다고 함 둘 다 사용 가능 -->
+                <!-- 'category.equals("t")'는 자바 코드 자바는 따옴표 구분함 "t"는 t라는 문자열을 아규먼트로 넘긴것. ''를 사용못함. -->
+                    upper(title) like upper(#{searchKeyword})
+                </when>
+                <when test='category.equals("c")'><!--여기 만족하면 해당 <when>태그의 sql문실행 -->
+                    upper(content) like upper(#{searchKeyword})
+                </when>
+                <when test='category.equals("tc")'><!--여기 만족하면 해당 <when>태그의 sql문실행 -->
+                    upper(title) like upper(#{searchKeyword})
+                    or
+                    upper(content) like upper(#{searchKeyword})
+                </when>       
+                <when test='category.equals("a")'><!--여기 만족하면 해당 <when>태그의 sql문실행 -->
+                    upper(author) like upper(#{searchKeyword})
+                </when>                           
+            </choose>
+        </where>
+        order by id desc <!-- id를 기준으로 내림차순 -->
+    </select> <!-- 조건에 따라서 sql문장이 동적으로 다르게 만들어지는 동적 쿼리라고 함. -->
 </mapper>
