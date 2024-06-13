@@ -76,7 +76,6 @@
                                                 value="${p.id}"></c:param>
                                         </c:url> <a href="${postDetailsPage}">${p.title}</a><!-- 제목을 클릭하면 /post/details로 url이 넘어감 -->
                                     </td>
-                                    <td>${p.title}</td>
                                     <td>${p.author}</td>
                                     <td>${p.modifiedTime}</td>
                                 </tr>

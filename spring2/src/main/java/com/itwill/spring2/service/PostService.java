@@ -118,6 +118,6 @@ public class PostService {
         
         return list.stream()
                 .map(PostListDto::fromEntity)
-                .toList();
+                .toList();//->Post타입의 list를 PostListDto타입으로 변환해서 리턴함.
     }
 }

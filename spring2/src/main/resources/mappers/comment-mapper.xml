@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.itwill.spring2.repository.CommentDao"> <!-- CommentDao (인터페이스) 이름까지 전부 작성 -->  
+    <select id="selectByPostId" resultType="Comment" ><!-- id 속성값 CommentDao에서 선언한 메서드이름과 동일하게 작성  -->
+    <!-- resultType="Comment" mybatis-config.xml에서 별명 설정해서 패키지 이름 생략하고 간단하게 클래스 이름으로만 작성함 sql문 실행 결과 이 타입으로 리턴 받겠다 설정한것-->
+        select * from comments
+        where post_id = #{postId}
+        order by id desc
+    </select>
+    <insert id="insert">
+        insert into comments (post_id, username, ctext)
+        values (#{postId},#{username},#{ctext}) <!--#{}안에 데이터베이스에 _를 사용한 컬럼만 카멜표기쓰면 됨. -->
+    </insert>
+    <update id="update"> <!--#{} getter메서드를 찾을수 있는 필드 이름을 찾으면 됨. -->
+        update comments set ctext = #{ctext}, modified_time = systimestamp
+        where id = #{id}
+    </update>
+    <delete id="deleteById">
+        delete from comments where id = #{id}
+    </delete>
+    <delete id="deleteByPostId">
+        delete from comments where post_id = #{postId}
+    </delete>
+    <select id="selectCommentCount" resultType="int"><!-- "java.lang.Integer" 원래는 풀네임으로 써야함 -->
+    <!-- select count(*) from comments where post_id = 74(글번호); -->
+        select count(*) from comments where post_id = #{postId}
+    </select>
+    <select id="selectById" resultType="Comment"><!-- select * from comments where id = 9; -->
+        select * from comments where id = #{id}
+    </select>
+  </mapper>

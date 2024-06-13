@@ -16,6 +16,8 @@
     <!--post-mapper.xml 파일에서 resultType 속성이 있는데 그 속성을 설정할 때 간단히 하기 위해서(alias사용해서 간단히) 코드작성 함. -->
     <typeAliases>
         <typeAlias type="com.itwill.spring2.repository.Post" alias="Post" /><!-- typeAlias 이 클래스 타입에 별명을 주겠다. Post라고 별명 붙임. -->
+        <typeAlias type="com.itwill.spring2.repository.Comment" alias="Comment" />
     </typeAliases>
+    
     
 </configuration>
