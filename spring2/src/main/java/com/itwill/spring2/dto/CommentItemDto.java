@@ -28,10 +28,14 @@ public class CommentItemDto {
     private String ctext;
     private String username; 
     
+    //Json 날짜 형식 변환 처리.
     //Response (서버 -> 클라이언트) 로 전달할 때에는 @JsonFormat 을 사용,
     //Request(클라이언트 -> 서버)로 전달할 때는 @DateTimeFormat 을 사용한다.
     //(post요청시 request에서는 @jsonFormat 사용 가능)
-    @JsonFormat(shape = Shape.STRING)//-> Json 날짜 형식 변환 처리. 예) "2024-06-14T15:56:54.79"
+ //   @JsonFormat(shape = Shape.STRING)//-> Json 날짜 형식 변환 처리. 예) "2024-06-14T15:56:54.79"
+ // 내가 원하는 형식으로 사용하고 싶으면 @
+//    @JsonFormat(pattern = "yyyy년 MM월 dd일 HH:mm:ss") //-> 예)"2024년 06월 14일 15:56:54"
+    @JsonFormat(pattern = "yyyy년 MM월 dd일 HH시 mm분 ss초") //-> 예) "2024년 06월 14일 15시 56분 54초"
     private LocalDateTime modifiedTime;
 
     // Comment 타입의 객체를 CommentItemDto 타입 객체로 변환해서 리턴하는 메서드.
