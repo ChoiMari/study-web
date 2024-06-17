@@ -20,7 +20,7 @@
         
         if (btnToggleComment.innerHTML === '댓글 보기') {
             btnToggleComment.innerHTML = '댓글 감추기';
-            //포스트에 달린 모든 댓글 목록 보여주는 메서드 호출
+            //포스트에 달린 모든 댓글 목록 화면에 보여주는 메서드(함수) 호출
             getAllComments();
         } else {
             btnToggleComment.innerHTML = '댓글 보기';
@@ -49,7 +49,7 @@
        // console.log(postId,ctext,username);
        
        //댓글 내용, 댓글 작성자가 비어있는 지 체크하기
-       if (ctext === '' || username ==='') {
+       if (ctext === '' || username === '') {
             alert('댓글 내용과 작성자는 반드시 입력하십시오.');
             return; //-> 이벤트 리스너를 종료
        }
