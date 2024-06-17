@@ -107,7 +107,7 @@ public class CommentRestController { //@RestController가 붙은 Rest컨트롤�
         dto.setId(id);
         int result = commentService.update(dto);
         
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(result); 
     }
 	
 	
