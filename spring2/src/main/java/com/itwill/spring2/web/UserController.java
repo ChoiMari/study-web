@@ -13,6 +13,6 @@ public class UserController {
 
 	@GetMapping("/signup") // 매핑된 uri는 /user/signup Get 방식의 요청을 처리하는 컨트롤러 메서드
 	public void signup() {
-		log.debug("GET signup()");
+		log.debug("GET signup()"); 
 	}
 }
