@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.itwill.spring2.repository.UserDao">
+    <!-- 아이디 중복 체크 resultType="User" 별명 붙여서(마이바티스-컨피그.xml에서) 간단히 사용함. 별명 없으면 패키지 이름까지 써주어야 함-->
+    <select id="selectByUserid" resultType="User" >
+        select * from users where userid = #{userid} <!-- 검색해서 같은 아이디가 있으면 쓸 수 없음. 결과가 null이면 사용가능한 아이디 -->
+    </select>  
+  </mapper>

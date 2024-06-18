@@ -67,37 +67,71 @@
             
             </div>
         </main>
-        
+
         <section>
             <div class="mt-2 card">
-                <div class="card-header d-inline-flex gap-1"><!-- 부트스트랩에서 가져온 class값 -->
+                <div class="card-header d-inline-flex gap-1">
+                    <!-- 부트스트랩에서 가져온 class값 -->
                     <!-- 댓글 접기/펼치기 기능 버튼 -->
-                    <button class="btn btn-secondary" id="btnToggleComment">댓글 보기</button>
+                    <button class="btn btn-secondary"
+                        id="btnToggleComment">댓글 보기</button>
                 </div>
-                
+
                 <!-- 댓글 토글 버튼에 의해서 접기/펼치기를 할 영역 -->
-                <div class="card-body collapse" id="collapseComments"><!-- collapse 접힌 상태. 댓글 보기 버튼 클릭해야 보임 -->
+                <div class="card-body collapse" id="collapseComments">
+                    <!-- collapse 접힌 상태. 댓글 보기 버튼 클릭해야 보임 -->
                     <!-- 댓글 등록 하는 부분 -->
                     <div class="mt-2 card card-body">
                         <div class="mt-2 row">
                             <div class="col-10">
                                 <!-- 댓글 입력 -->
-                                <textarea class="form-control" rows="3" id="ctext" placeholder="댓글 내용"></textarea>
-                                
+                                <textarea class="form-control" rows="3"
+                                    id="ctext" placeholder="댓글 내용"></textarea>
+
                                 <!-- TODO : 댓글 작성자 아이디. 로그인한 사용자의 아이디로 설정 바꿔주어야 함 -->
-                                <input class="mt-3" id="username" placeholder=" 댓글 작성자" />
+                                <input class="mt-3" id="username"
+                                    placeholder=" 댓글 작성자" />
                             </div>
                             <div class="col-2">
-                                <button class="btn btn-outline-success" id="btnRegisterComment">등록</button>
+                                <button class="btn btn-outline-success"
+                                    id="btnRegisterComment">등록</button>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- 포스트에 달려 있는 댓글 목록을 보여줄 영역 -->
-                    <div class="mt-2" id="comments" ></div>
+                    <div class="mt-2" id="comments"></div>
                 </div>
             </div>
-        </section>               
+        </section>
+
+        <!--댓글 업데이트 모달(다이얼로그) 시작 부분 -->
+        <div id="commentModal" class="modal" tabindex="-1" > 
+        <!--tabindex="-1"의 의미 : z축(3차원) 화면 앞쪽으로 튀어나오는 가상의 축(z)을 -1로 함. 
+        tabindex="-1" 그럼 가려짐(뒷쪽에 숨겨진것) 다른 컨텐트 보다 앞쪽으로 올리면 보여지게됨-->
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">댓글 업데이트</h5>
+                        <!-- x모양 버튼 data-bs-dismiss="modal"모달을 제거 한다.-->
+                        <button type="button" class="btn-close"
+                            data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 수정할 댓글 아이디(번호) --> <!-- class="d-none" 안보이게 감춤 -->
+                        <input class="d-none" id="modalCommentId" />
+                        <!-- 수정할 댓글 내용 -->
+                        <textarea class="mt-3 form-control" id="modalCommentText" ></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary"
+                            data-bs-dismiss="modal">취소</button>
+                        <button id="btnUpdateComment" type="button" class="btn btn-primary">저장</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+`       <!--댓글 업데이트 모달(다이얼로그) 끝 -->
     </div>
      <!-- 부트스트랩 js라이브러리 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 

@@ -34,6 +34,15 @@
     btnRegisterComment.addEventListener('click', registerComment); //내부에 코드가 길어서 익명함수 쓰지 않고  registerComment 라는 
     //함수를 만들어 씀
     
+    //부트스트랩 모달(다이얼로그) 객체 생성 div id속성 commentModal 찾(모달)아서 new 객체생성 함
+    const commentModal = new bootstrap.Modal('div#commentModal', {backdrop:true});
+    
+    //모달의 저장 버튼을 찾고, 클릭 이벤트 리스너를 설정.
+    const btnUpdateComment = document.querySelector('button#btnUpdateComment');
+    btnUpdateComment.addEventListener('click',updateComment); //updateComment 함수 만들어서 넣음.
+    
+    /*-----------------------------------------------------------------------*/
+    
     //댓글 등록 이벤트 리스너 콜백(함수) -> 만드는 위치 중요하지 않다고 함.
     function registerComment() {
         ///post/details.jsp에서 id가 id,ctext,username 찾아서 가져옴
@@ -154,14 +163,18 @@
             
         }
         //TODO : 모든 수정 버튼들을 찾아서 클릭 이벤트 리스너를 설정함.
-        
+        const btnModifies = document.querySelectorAll('button.btnModifyComment');
+        for(let btn of btnModifies) { //모든 수정버튼을 반복문으로 하나씩 꺼내서 모든 수정버튼 하나하나에 클릭하면 발생하는 리스너 설정
+          //  btn.addEventListener('click',() => {commentModal.show();}); // 수정버튼 클릭하면 commentModal.show(); 모달창 나옴
+            btn.addEventListener('click',showCommentModal);
+        }
     }
     
-    function deleteComment(event) { //이벤트 리스너가 가지고 있는 event객체 
+    function deleteComment(event) { //이벤트 리스너가 가지고 있는 event객체 . 이벤트객체가 필요한 경우만 파라미터 선언. 필요없으면 선언하지 않아도 됨.
         //이벤트 리스너 콜백의 아규먼트 event 객체는 target 속성을 가지고 있음.
         console.log(event);//이벤트가 발생한 요소(타겟)
         //data-id= 속성 값 읽고 싶으면 이렇게
-        const id = event.target.getAttribute('data-id'); //-> 이벤트가 발생한 요소(타겟)에서 data-id 뽑아내겠다.
+        const id = event.target.getAttribute('data-id'); //->event.target 사용자가 클릭한버튼을 의미.getAttribute('클래스이름(data-id)'); 이벤트가 발생한 요소(타겟)에서 data-id 뽑아내겠다. 
         //html의 data-id요소의 속성값 찾기. 삭제하기 위한 글번호 
         
         //삭제 여부 확인
@@ -176,15 +189,72 @@
         //Ajax 요청을 보냄
         axios
         .delete(uri)
-        .then((response) => {
+        .then((response) => { //then 콜백 등록해줌
             console.log(response.data); //-> 삭제 성공 시 response.data는 1
             if(response.data === 1){
                 alert(`댓글(${id}) 삭제 성공`);
                 getAllComments(); //댓글 목록 갱신
             } 
         })
-        .catch((error) => {
+        .catch((error) => { //catch 에러가왔을때 콜백 등록해줌
             console.log(error);
         });
     }
+    
+    function showCommentModal(event){
+        //이벤트 타겟(수정 버튼)의 data-id 속성 값을 읽음.
+        const id = event.target.getAttribute('data-id');
+        
+        //Ajax 요청을 보내서 댓글 아이디로 검색.
+        const uri = `../api/comment/${id}`;
+        axios
+        .get(uri)
+        .then((response) => {
+            console.log(response); //response객체 콘솔에 출력
+            console.log(response.data); //axios 방식으로 보낼 경우에만 response.data 속성 있음 response객체의 data출력
+            console.log(response.data.id); //response.data가 가지고 있는 id를 출력함. ctext가져오고 싶으면response.data.ctext
+          //  const commentId = response.data.id; 
+          
+          //모달의 input(댓글 번호), textarea(댓글 내용)을 채움. 일단 jsp에 있는걸 찾아서 채워야함
+          document.querySelector('input#modalCommentId').value = id;
+          document.querySelector('textarea#modalCommentText').value = response.data.ctext;
+          //모달 보여주기
+          commentModal.show();
+          
+        })
+        .catch((error) => console.log(error)); //실행하는 문장 1개일 경우 {}생략 가능.
+    }
+    
+    //함수 만듬 updateComment 댓글 업데이트 모달의 [저장] 버튼의 클릭 이벤트 리스너
+    function updateComment() {
+  //      console.log('TODO : update ajax');
+        //할일 끝나서 모달 없앰
+ //       commentModal.hide(); //모달(다이얼로그)를 감춤.
+        //업데이트 할 댓글 번호
+        const id = document.querySelector('input#modalCommentId').value; // 업데이트할 댓글 번호 찾아 변수에 저장
+        //업데이트할 댓글 내용
+        const ctext = document.querySelector('textarea#modalCommentText').value;
+        if(ctext === '') {
+            alert('업데이트할 댓글 내용을 입력하세요.');
+            return; //이벤트 리스너 종료
+        }
+        //댓글 업데이트 요청 REST API URI 주소
+        const uri = `../api/comment/${id}`; //빽팁사용``로 감쌈 const id = document.querySelector('input#modalCommentId').value; 에서 찾은 값
+        
+        //Ajax 요청
+        axios
+        .put(uri,{ctext}) //put방식으로 보냄 {ctext}는 {ctext:ctext} 를 간단히 쓴 것. 객체{프로퍼티이름:프로퍼티값} id까지 보내려면 {id,ctext}
+        //put방식의 아규먼트로 보낸 uri 매핑 응답이 오면 밑에 코드 실행됨. {ctext}객체를 읽은 것. 매핑된 컨트롤러 dto에는 id가 null이라고 함.
+        //그래서 컨트롤러에서 서비스.업데이트메서드 호출 전에 dto.setId(id);한거라고 컨트롤러에서 이게 id값을 채워줌. 
+        //컨트롤러 리턴값 성공200ok여서 then실행
+        .then((response) => { //성공 시 실행
+            console.log(response);
+            // 댓글 목록 갱신
+             getAllComments(); //댓글 목록 갱신
+            // 모달 숨김
+             commentModal.hide();
+        }) 
+        .catch((error) => console.log(error));
+    }
+    
 });
