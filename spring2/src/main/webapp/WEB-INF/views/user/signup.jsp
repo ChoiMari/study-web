@@ -27,7 +27,7 @@
         <main> <!-- my-2 위아래 마진 2씩 준다는 의미 -->
             <div class="my-2 card card-body">
                 <!-- 회원가입 양식 form -->
-                <c:set var="signUpPage" value="/user/signup" />
+                <c:url var="signUpPage" value="/user/signup" />
                 <form action="${signUpPage}" method="post">
                     <div class="my-2">
                         <input type="text" class="form-control" id="userid" 
@@ -49,7 +49,7 @@
                     <!--회원가입 완료 버튼 폼에 넣은 버튼은 submit 기능있다고..?맞나?-->
                     <div class="my-2"> <!-- disabled속성 버튼 사용할 수 없도록 기능을 막아버림. 부트스트랩 속성. -->
                         <!-- 아이디 중복체크 하고 3개의 칸 비어있지 않을 때 이 막아버린 속성 뺄거라고 함 -->
-                        <button class="form-control btn btn-outline-success disabled" id="btnSignup">완료</button>
+                        <button class="form-control btn btn-outline-success disabled" id="btnSignUp">완료</button>
                     </div>
                 </form>
             </div>
