@@ -3,6 +3,7 @@ package com.itwill.spring2.service;
 import org.springframework.stereotype.Service;
 
 import com.itwill.spring2.dto.UserCreateDto;
+import com.itwill.spring2.dto.UserSignInDto;
 import com.itwill.spring2.repository.*;
 
 import lombok.RequiredArgsConstructor;
@@ -42,4 +43,14 @@ public class UserService {
 		int result = userDao.insert(dto.toEntity()); //-> 아규먼트 타입 변환만 한 것 UserCreateDto타입을 User타입으로 변환.DB에 insert되면 1리턴
 		return result; //return userDao.insert(dto.toEntity()); 해도 상관 없음.
 	}
+	
+    // 로그인 서비스
+    public User read(UserSignInDto dto) {
+        log.debug("read({})", dto);
+        
+        User user = userDao.selectByUseridAndPassword(dto.toEntity());
+        
+        return user;
+    }
+	
 }

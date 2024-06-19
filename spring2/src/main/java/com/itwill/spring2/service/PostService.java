@@ -10,6 +10,7 @@ import com.itwill.spring2.dto.PostCreateDto;
 import com.itwill.spring2.dto.PostListDto;
 import com.itwill.spring2.dto.PostSearchDto;
 import com.itwill.spring2.dto.PostUpdateDto;
+import com.itwill.spring2.repository.CommentDao;
 import com.itwill.spring2.repository.Post;
 import com.itwill.spring2.repository.PostDao;
 import com.itwill.spring2.web.PostController;
@@ -35,7 +36,7 @@ public class PostService {
 	// 방법 : 1. final 필드 선언 2. final 필드를 초기화 하는 생성자 작성.
 //	private final PostDao postDao; //컴파일 에러. 이유: final변수는 반드시 초기화 되어야함. 그자리에서 바로 값을 할당 하거나, 생성자호출해서 초기화
 	private final PostDao postDao; // -> 생성자로 초기화. 이렇게 초기화된 변수는 바뀔수 없음 final변수라서-> 생성자에 의한 의존성 주입.
-
+	private final CommentDao commentDao; // 생성자에 의한 의존성 주입
 //	public PostService(PostDao postDao) { //-> 필수 아규먼트가 필요한 생성자라고 말함. 
 //		this.postDao = postDao;
 //		근데 코드를 이렇게 작성할 필요 없다고 함. 클래스 앞에 @RequiredArgsConstructor으로 대체.
@@ -95,11 +96,21 @@ public class PostService {
 	
 	public int delete(int id) {
 		log.debug("delete(id={})",id);
-		//리포지토리 컴포넌트의 메서드를 호출해서 delete 쿼리를 실행함.
-		int result = postDao.deletePost(id);
-		log.debug("delete 결과 ={}",result);
-		
-		return result;
+//		//리포지토리 컴포넌트의 메서드를 호출해서 delete 쿼리를 실행함.
+//		int result = postDao.deletePost(id);
+//		log.debug("delete 결과 ={}",result);
+//		
+//		return result;
+        // 리포지토리 컴포넌트의 메서드를 호출해서 delete 쿼리를 실행.
+        // (1) 포스트에 달려 있는 모든 댓글들을 삭제:
+        int rows = commentDao.deleteByPostId(id);
+        log.debug("삭제된 댓글 개수 = {}", rows);
+        
+        // (2) 포스트를 삭제:
+        int result = postDao.deletePost(id);
+        log.debug("delete 결과 = {}", result);
+        
+        return result;
 	}
 
 	public int update(PostUpdateDto dto) {
